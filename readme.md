@@ -6,7 +6,7 @@
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue)
 ![Flask](https://img.shields.io/badge/flask-2.0%2B-red)
 
-A comprehensive web application for RCCIIT (Rajabazar Calcutta College of Engineering, Information Technology) that enables students to provide structured feedback on professors and their teaching methods. This system helps the Head of Department (HOD) make data-driven decisions to improve teaching quality.
+A comprehensive web application for RCCIIT (RCC Institute of Information Technology) that enables students to provide structured feedback on professors and their teaching methods. This system helps the Head of Department (HOD) make data-driven decisions to improve teaching quality.
 
 ## ✨ Features
 
