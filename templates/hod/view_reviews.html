@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}View Reviews - RCCIIT Review System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Teacher Reviews Overview</h2>
+
+    {% if not teacher_stats %}
+        <div class="alert alert-info">No reviews have been submitted yet.</div>
+    {% else %}
+        <div class="row">
+            {% for stats in teacher_stats %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ stats.teacher.user.name }}</h5>
+                            <span class="badge bg-light text-primary">{{ stats.overall_rating }} / 5</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <strong>Department:</strong> {{ stats.teacher.department }}<br>
+                                <strong>Total Reviews:</strong> {{ stats.review_count }}
+                            </p>
+                            
+                            {% if stats.reviews %}
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Student</th>
+                                                <th>Course</th>
+                                                <th>Rating</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for review in stats.reviews %}
+                                                <tr>
+                                                    <td>{{ review.student_name }}</td>
+                                                    <td>{{ review.course_code }}</td>
+                                                    <td>{{ review.average_rating }}/5</td>
+                                                    <td>
+                                                        {% if review.comment %}
+                                                            {{ review.comment|truncate(50) }}
+                                                        {% else %}
+                                                            <em>No comment</em>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a href="{{ url_for('teacher_reviews', teacher_id=stats.teacher.id) }}" 
+                                   class="btn btn-primary btn-sm">View Detailed Reviews</a>
+                            {% else %}
+                                <div class="alert alert-info">No reviews submitted yet.</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

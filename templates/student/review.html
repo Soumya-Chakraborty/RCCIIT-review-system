@@ -1,0 +1,117 @@
+{% extends "base.html" %} {% block title %}Submit Review - RCCIIT Review
+System{% endblock %} {% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Submit Review</h4>
+        </div>
+        <div class="card-body">
+            <h5>Professor: {{ teacher.name }}</h5>
+            <h6 class="text-muted">
+                Course: {{ course.code }} - {{ course.name }}
+            </h6>
+
+            <form method="POST" class="mt-4">
+                {{ form.hidden_tag() }} {% for criterion in criteria %}
+                <div class="form-group mb-4">
+                    {% set field_name = 'criterion_' ~ criterion.id %}
+                    <label class="form-label">{{ criterion.name }}</label>
+                    <div class="star-rating-container">
+                        {{ form[field_name](class="form-control") }}
+                        <div class="star-rating"></div>
+                    </div>
+                    {% if form[field_name].errors %} {% for error in
+                    form[field_name].errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %} {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="form-group mb-4">
+                    {{ form.comment.label(class="form-label") }} {{
+                    form.comment(class="form-control", rows=4,
+                    placeholder="Enter your additional comments here...") }} {%
+                    if form.comment.errors %} {% for error in
+                    form.comment.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %} {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Submit Review
+                    </button>
+                    <a
+                        href="{{ url_for('student_dashboard') }}"
+                        class="btn btn-secondary"
+                        >Cancel</a
+                    >
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Convert select dropdowns to star ratings
+        document.querySelectorAll("select").forEach(function (select) {
+            const container = select.closest(".star-rating-container");
+            const starRating = container.querySelector(".star-rating");
+
+            // Create stars
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement("i");
+                star.className = "far fa-star";
+                star.setAttribute("data-value", i);
+                starRating.appendChild(star);
+
+                // Add click handler
+                star.addEventListener("click", function () {
+                    const value = this.getAttribute("data-value");
+                    select.value = value;
+
+                    // Update stars
+                    starRating.querySelectorAll("i").forEach(function (s) {
+                        if (
+                            parseInt(s.getAttribute("data-value")) <=
+                            parseInt(value)
+                        ) {
+                            s.className = "fas fa-star";
+                        } else {
+                            s.className = "far fa-star";
+                        }
+                    });
+                });
+            }
+
+            // Hide select
+            select.style.display = "none";
+
+            // Set initial value if exists
+            if (select.value) {
+                const event = new Event("click");
+                starRating
+                    .querySelector(`[data-value="${select.value}"]`)
+                    .dispatchEvent(event);
+            }
+        });
+    });
+</script>
+{% endblock %} {% block styles %}
+<style>
+    .star-rating {
+        font-size: 24px;
+        color: #ffc107;
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    .star-rating i {
+        margin-right: 5px;
+    }
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}

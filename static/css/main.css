@@ -1,0 +1,58 @@
+/* Global styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.footer {
+    margin-top: 2rem;
+    padding: 1rem 0;
+    background-color: #f8f9fa;
+}
+
+/* Card adjustments */
+.card {
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+}
+
+/* Form elements */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Rating stars */
+.star-rating {
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.star-rating i {
+    color: #ffc107;
+    cursor: pointer;
+    margin-right: 0.25rem;
+}
+
+/* Dashboard cards */
+.dashboard-stat {
+    transition: transform 0.3s;
+}
+
+.dashboard-stat:hover {
+    transform: translateY(-5px);
+}
+
+/* Nav tabs */
+.nav-tabs .nav-link {
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    font-weight: bold;
+}

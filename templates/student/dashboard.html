@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block title %}Student Dashboard - RCCIIT Review
+System{% endblock %} {% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ current_user.name }}</h2>
+    <p>Semester: {{ current_user.semester }}, Section: {{ current_user.section }}</p>
+    
+    {% if not teacher_courses %}
+        <div class="alert alert-info">
+            No teachers are currently assigned to your semester ({{ current_user.semester }}) and section ({{ current_user.section }}).
+        </div>
+    {% else %}
+        <div class="row mt-4">
+            {% for teacher_course in teacher_courses %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ teacher_course.teacher.user.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ teacher_course.course.name }}</h6>
+                            <p class="card-text">
+                                Course Code: {{ teacher_course.course.code }}<br>
+                                Semester: {{ teacher_course.semester }}<br>
+                                Section: {{ teacher_course.section }}
+                            </p>
+                            {% if teacher_course.teacher.id not in submitted_teacher_ids %}
+                                <a href="{{ url_for('submit_review', teacher_course_id=teacher_course.id) }}" 
+                                   class="btn btn-primary">Submit Review</a>
+                            {% else %}
+                                <button class="btn btn-secondary" disabled>Review Submitted</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
